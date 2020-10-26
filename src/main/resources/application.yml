@@ -8,7 +8,7 @@ info:
       runtime-version: ${java.runtime.version}
 
 server:
-  port: 9443
+  port: 8080
   servlet:
     context-path: /
 
@@ -44,6 +44,9 @@ management:
 
 
 spring:
+  thymeleaf:
+    enabled: true
+
   datasource:
     driverClassName:  org.postgresql.Driver
     type: com.zaxxer.hikari.HikariDataSource
