@@ -1,18 +1,25 @@
 package com.jet_sys.graphql.graphtest.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigInteger;
 import java.util.Objects;
 
-@Entity
-@Table(name = "sales_by_store", schema = "public", catalog = "dvdrental")
+//@Entity
+//@Table(name = "sales_by_store", schema = "public", catalog = "dvdrental")
 public class SalesByStore {
+	@Basic
+	@Column(name = "store", nullable = true, length = -1)
 	private String store;
+	@Basic
+	@Column(name = "manager", nullable = true, length = -1)
 	private String manager;
+	@Basic
+	@Column(name = "total_sales", nullable = true, precision = 0)
 	private BigInteger totalSales;
 
-	@Id
-	@Column(name = "store", nullable = false, length = -1)
 	public String getStore() {
 		return store;
 	}
@@ -21,8 +28,6 @@ public class SalesByStore {
 		this.store = store;
 	}
 
-	@Basic
-	@Column(name = "manager", nullable = true, length = -1)
 	public String getManager() {
 		return manager;
 	}
@@ -31,8 +36,6 @@ public class SalesByStore {
 		this.manager = manager;
 	}
 
-	@Basic
-	@Column(name = "total_sales", nullable = true, precision = 0)
 	public BigInteger getTotalSales() {
 		return totalSales;
 	}

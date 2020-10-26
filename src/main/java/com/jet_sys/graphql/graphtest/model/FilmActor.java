@@ -8,14 +8,24 @@ import java.util.Objects;
 @Table(name = "film_actor", schema = "public", catalog = "dvdrental")
 @IdClass(FilmActorPK.class)
 public class FilmActor {
-	private Short actorId;
-	private Short filmId;
-	private Timestamp lastUpdate;
-	private Actor actorByActorId;
-	private Film filmByFilmId;
-
 	@Id
 	@Column(name = "actor_id", nullable = false)
+	private Short actorId;
+	@Id
+	@Column(name = "film_id", nullable = false)
+	private Short filmId;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+
+	@ManyToOne
+	@JoinColumn(name = "actorByActorId", referencedColumnName = "actor_id", nullable = false)
+	private Actor actorByActorId;
+
+	@ManyToOne
+	@JoinColumn(name = "filmByFildIdid", referencedColumnName = "film_id", nullable = false)
+	private Film filmByFilmId;
+
 	public Short getActorId() {
 		return actorId;
 	}
@@ -24,8 +34,6 @@ public class FilmActor {
 		this.actorId = actorId;
 	}
 
-	@Id
-	@Column(name = "film_id", nullable = false)
 	public Short getFilmId() {
 		return filmId;
 	}
@@ -34,8 +42,6 @@ public class FilmActor {
 		this.filmId = filmId;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -63,8 +69,6 @@ public class FilmActor {
 		return Objects.hash(actorId, filmId, lastUpdate);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "actor_id", referencedColumnName = "actor_id", nullable = false)
 	public Actor getActorByActorId() {
 		return actorByActorId;
 	}
@@ -73,8 +77,6 @@ public class FilmActor {
 		this.actorByActorId = actorByActorId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false)
 	public Film getFilmByFilmId() {
 		return filmByFilmId;
 	}

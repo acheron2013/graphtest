@@ -7,13 +7,18 @@ import java.util.Objects;
 
 @Entity
 public class Category {
-	private Integer categoryId;
-	private String name;
-	private Timestamp lastUpdate;
-	private Collection<FilmCategory> filmCategoriesByCategoryId;
-
 	@Id
 	@Column(name = "category_id", nullable = false)
+	private Integer categoryId;
+	@Basic
+	@Column(name = "name", nullable = false, length = 25)
+	private String name;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@OneToMany(mappedBy = "categoryByCategoryId")
+	private Collection<FilmCategory> filmCategoriesByCategoryId;
+
 	public Integer getCategoryId() {
 		return categoryId;
 	}
@@ -22,8 +27,6 @@ public class Category {
 		this.categoryId = categoryId;
 	}
 
-	@Basic
-	@Column(name = "name", nullable = false, length = 25)
 	public String getName() {
 		return name;
 	}
@@ -32,8 +35,6 @@ public class Category {
 		this.name = name;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -61,7 +62,6 @@ public class Category {
 		return Objects.hash(categoryId, name, lastUpdate);
 	}
 
-	@OneToMany(mappedBy = "categoryByCategoryId")
 	public Collection<FilmCategory> getFilmCategoriesByCategoryId() {
 		return filmCategoriesByCategoryId;
 	}

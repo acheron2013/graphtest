@@ -7,13 +7,18 @@ import java.util.Objects;
 
 @Entity
 public class Language {
-	private Integer languageId;
-	private String name;
-	private Timestamp lastUpdate;
-	private Collection<Film> filmsByLanguageId;
-
 	@Id
 	@Column(name = "language_id", nullable = false)
+	private Integer languageId;
+	@Basic
+	@Column(name = "name", nullable = false, length = 20)
+	private String name;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@OneToMany(mappedBy = "languageByLanguageId")
+	private Collection<Film> filmsByLanguageId;
+
 	public Integer getLanguageId() {
 		return languageId;
 	}
@@ -22,8 +27,6 @@ public class Language {
 		this.languageId = languageId;
 	}
 
-	@Basic
-	@Column(name = "name", nullable = false, length = 20)
 	public String getName() {
 		return name;
 	}
@@ -32,8 +35,6 @@ public class Language {
 		this.name = name;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -61,7 +62,6 @@ public class Language {
 		return Objects.hash(languageId, name, lastUpdate);
 	}
 
-	@OneToMany(mappedBy = "languageByLanguageId")
 	public Collection<Film> getFilmsByLanguageId() {
 		return filmsByLanguageId;
 	}

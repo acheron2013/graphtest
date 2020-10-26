@@ -7,21 +7,40 @@ import java.util.Objects;
 
 @Entity
 public class Address {
-	private Integer addressId;
-	private String address;
-	private String address2;
-	private String district;
-	private Short cityId;
-	private String postalCode;
-	private String phone;
-	private Timestamp lastUpdate;
-	private City cityByCityId;
-	private Collection<Customer> customersByAddressId;
-	private Collection<Staff> staffByAddressId;
-	private Collection<Store> storesByAddressId;
-
 	@Id
 	@Column(name = "address_id", nullable = false)
+	private Integer addressId;
+	@Basic
+	@Column(name = "address", nullable = false, length = 50)
+	private String address;
+	@Basic
+	@Column(name = "address2", nullable = true, length = 50)
+	private String address2;
+	@Basic
+	@Column(name = "district", nullable = false, length = 20)
+	private String district;
+	@Basic
+	@Column(name = "city_id", insertable = false, updatable = false, nullable = false)
+	private Short cityId;
+	@Basic
+	@Column(name = "postal_code", nullable = true, length = 10)
+	private String postalCode;
+	@Basic
+	@Column(name = "phone", nullable = false, length = 20)
+	private String phone;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@ManyToOne
+	@JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = false)
+	private City cityByCityId;
+	@OneToMany(mappedBy = "addressByAddressId")
+	private Collection<Customer> customersByAddressId;
+	@OneToMany(mappedBy = "addressByAddressId")
+	private Collection<Staff> staffByAddressId;
+	@OneToMany(mappedBy = "addressByAddressId")
+	private Collection<Store> storesByAddressId;
+
 	public Integer getAddressId() {
 		return addressId;
 	}
@@ -30,8 +49,6 @@ public class Address {
 		this.addressId = addressId;
 	}
 
-	@Basic
-	@Column(name = "address", nullable = false, length = 50)
 	public String getAddress() {
 		return address;
 	}
@@ -40,8 +57,6 @@ public class Address {
 		this.address = address;
 	}
 
-	@Basic
-	@Column(name = "address2", nullable = true, length = 50)
 	public String getAddress2() {
 		return address2;
 	}
@@ -50,8 +65,6 @@ public class Address {
 		this.address2 = address2;
 	}
 
-	@Basic
-	@Column(name = "district", nullable = false, length = 20)
 	public String getDistrict() {
 		return district;
 	}
@@ -60,8 +73,6 @@ public class Address {
 		this.district = district;
 	}
 
-	@Basic
-	@Column(name = "city_id", nullable = false)
 	public Short getCityId() {
 		return cityId;
 	}
@@ -70,8 +81,6 @@ public class Address {
 		this.cityId = cityId;
 	}
 
-	@Basic
-	@Column(name = "postal_code", nullable = true, length = 10)
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -80,8 +89,6 @@ public class Address {
 		this.postalCode = postalCode;
 	}
 
-	@Basic
-	@Column(name = "phone", nullable = false, length = 20)
 	public String getPhone() {
 		return phone;
 	}
@@ -90,8 +97,6 @@ public class Address {
 		this.phone = phone;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -124,8 +129,6 @@ public class Address {
 		return Objects.hash(addressId, address, address2, district, cityId, postalCode, phone, lastUpdate);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "city_id", referencedColumnName = "city_id", nullable = false)
 	public City getCityByCityId() {
 		return cityByCityId;
 	}
@@ -134,7 +137,6 @@ public class Address {
 		this.cityByCityId = cityByCityId;
 	}
 
-	@OneToMany(mappedBy = "addressByAddressId")
 	public Collection<Customer> getCustomersByAddressId() {
 		return customersByAddressId;
 	}
@@ -143,7 +145,6 @@ public class Address {
 		this.customersByAddressId = customersByAddressId;
 	}
 
-	@OneToMany(mappedBy = "addressByAddressId")
 	public Collection<Staff> getStaffByAddressId() {
 		return staffByAddressId;
 	}
@@ -152,7 +153,6 @@ public class Address {
 		this.staffByAddressId = staffByAddressId;
 	}
 
-	@OneToMany(mappedBy = "addressByAddressId")
 	public Collection<Store> getStoresByAddressId() {
 		return storesByAddressId;
 	}

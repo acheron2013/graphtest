@@ -1,5 +1,11 @@
 package com.jet_sys.graphql.graphtest.model;
 
+import com.vladmihalcea.hibernate.type.array.EnumArrayType;
+import com.vladmihalcea.hibernate.type.array.IntArrayType;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -7,27 +13,85 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@TypeDefs({
+		@TypeDef(
+				typeClass = StringArrayType.class,
+				defaultForType = String[].class
+		),
+//		@TypeDef(
+//				typeClass = IntArrayType.class,
+//				defaultForType = int[].class
+//		),
+//		@TypeDef(
+//				typeClass = EnumArrayType.class,
+//				defaultForType = SensorState[].class,
+//				parameters = {
+//						@Parameter(
+//								name = EnumArrayType.SQL_ARRAY_TYPE,
+//								value = "sensor_state"
+//						)
+//				}
+		@TypeDef(
+				typeClass = EnumArrayType.class,
+				defaultForType = MpaaRating.class
+//				parameters = {
+//						@Parameter(
+//								name = EnumArrayType.SQL_ARRAY_TYPE,
+//								value = "sensor_state"
+//						)
+//				}
+		)
+})
 public class Film {
-	private Integer filmId;
-	private String title;
-	private String description;
-	private Object releaseYear;
-	private Short languageId;
-	private Short rentalDuration;
-	private BigDecimal rentalRate;
-	private Short length;
-	private BigDecimal replacementCost;
-	private Object rating;
-	private Timestamp lastUpdate;
-	private Object specialFeatures;
-	private Object fulltext;
-	private Language languageByLanguageId;
-	private Collection<FilmActor> filmActorsByFilmId;
-	private Collection<FilmCategory> filmCategoriesByFilmId;
-	private Collection<Inventory> inventoriesByFilmId;
-
 	@Id
 	@Column(name = "film_id", nullable = false)
+	private Integer filmId;
+	@Basic
+	@Column(name = "title", nullable = false, length = 255)
+	private String title;
+	@Basic
+	@Column(name = "description", nullable = true, length = -1)
+	private String description;
+	@Basic
+	@Column(name = "release_year", nullable = true, columnDefinition = "Integer")
+	private Integer releaseYear;
+	@Basic
+	@Column(name = "language_id", insertable = false, updatable = false, nullable = false)
+	private Short languageId;
+	@Basic
+	@Column(name = "rental_duration", nullable = false)
+	private Short rentalDuration;
+	@Basic
+	@Column(name = "rental_rate", nullable = false, precision = 2)
+	private BigDecimal rentalRate;
+	@Basic
+	@Column(name = "length", nullable = true)
+	private Short length;
+	@Basic
+	@Column(name = "replacement_cost", nullable = false, precision = 2)
+	private BigDecimal replacementCost;
+	@Basic
+	@Column(name = "rating", nullable = true, columnDefinition = "rating")
+	private MpaaRating rating;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@Lob
+	@Column(name = "special_features", nullable = true, length = -1)
+	private String specialFeatures;
+	@Lob
+	@Column(name = "fulltext", nullable = false)
+	private String fulltext;
+	@ManyToOne
+	@JoinColumn(name = "language_id", referencedColumnName = "language_id", nullable = false)
+	private Language languageByLanguageId;
+	@OneToMany(mappedBy = "filmByFilmId")
+	private Collection<FilmActor> filmActorsByFilmId;
+	@OneToMany(mappedBy = "filmByFilmId")
+	private Collection<FilmCategory> filmCategoriesByFilmId;
+	@OneToMany(mappedBy = "filmByFilmId")
+	private Collection<Inventory> inventoriesByFilmId;
+
 	public Integer getFilmId() {
 		return filmId;
 	}
@@ -36,8 +100,6 @@ public class Film {
 		this.filmId = filmId;
 	}
 
-	@Basic
-	@Column(name = "title", nullable = false, length = 255)
 	public String getTitle() {
 		return title;
 	}
@@ -46,8 +108,6 @@ public class Film {
 		this.title = title;
 	}
 
-	@Basic
-	@Column(name = "description", nullable = true, length = -1)
 	public String getDescription() {
 		return description;
 	}
@@ -56,18 +116,14 @@ public class Film {
 		this.description = description;
 	}
 
-	@Basic
-	@Column(name = "release_year", nullable = true)
-	public Object getReleaseYear() {
+	public Integer getReleaseYear() {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(Object releaseYear) {
+	public void setReleaseYear(Integer releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 
-	@Basic
-	@Column(name = "language_id", nullable = false)
 	public Short getLanguageId() {
 		return languageId;
 	}
@@ -76,8 +132,6 @@ public class Film {
 		this.languageId = languageId;
 	}
 
-	@Basic
-	@Column(name = "rental_duration", nullable = false)
 	public Short getRentalDuration() {
 		return rentalDuration;
 	}
@@ -86,8 +140,6 @@ public class Film {
 		this.rentalDuration = rentalDuration;
 	}
 
-	@Basic
-	@Column(name = "rental_rate", nullable = false, precision = 2)
 	public BigDecimal getRentalRate() {
 		return rentalRate;
 	}
@@ -96,8 +148,6 @@ public class Film {
 		this.rentalRate = rentalRate;
 	}
 
-	@Basic
-	@Column(name = "length", nullable = true)
 	public Short getLength() {
 		return length;
 	}
@@ -106,8 +156,6 @@ public class Film {
 		this.length = length;
 	}
 
-	@Basic
-	@Column(name = "replacement_cost", nullable = false, precision = 2)
 	public BigDecimal getReplacementCost() {
 		return replacementCost;
 	}
@@ -116,18 +164,14 @@ public class Film {
 		this.replacementCost = replacementCost;
 	}
 
-	@Basic
-	@Column(name = "rating", nullable = true)
-	public Object getRating() {
+	public MpaaRating getRating() {
 		return rating;
 	}
 
-	public void setRating(Object rating) {
+	public void setRating(MpaaRating rating) {
 		this.rating = rating;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -136,23 +180,19 @@ public class Film {
 		this.lastUpdate = lastUpdate;
 	}
 
-	@Basic
-	@Column(name = "special_features", nullable = true, length = -1)
-	public Object getSpecialFeatures() {
+	public String getSpecialFeatures() {
 		return specialFeatures;
 	}
 
-	public void setSpecialFeatures(Object specialFeatures) {
+	public void setSpecialFeatures(String specialFeatures) {
 		this.specialFeatures = specialFeatures;
 	}
 
-	@Basic
-	@Column(name = "fulltext", nullable = false)
-	public Object getFulltext() {
+	public String getFulltext() {
 		return fulltext;
 	}
 
-	public void setFulltext(Object fulltext) {
+	public void setFulltext(String fulltext) {
 		this.fulltext = fulltext;
 	}
 
@@ -185,8 +225,6 @@ public class Film {
 		return Objects.hash(filmId, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, lastUpdate, specialFeatures, fulltext);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "language_id", referencedColumnName = "language_id", nullable = false)
 	public Language getLanguageByLanguageId() {
 		return languageByLanguageId;
 	}
@@ -195,7 +233,6 @@ public class Film {
 		this.languageByLanguageId = languageByLanguageId;
 	}
 
-	@OneToMany(mappedBy = "filmByFilmId")
 	public Collection<FilmActor> getFilmActorsByFilmId() {
 		return filmActorsByFilmId;
 	}
@@ -204,7 +241,6 @@ public class Film {
 		this.filmActorsByFilmId = filmActorsByFilmId;
 	}
 
-	@OneToMany(mappedBy = "filmByFilmId")
 	public Collection<FilmCategory> getFilmCategoriesByFilmId() {
 		return filmCategoriesByFilmId;
 	}
@@ -214,7 +250,6 @@ public class Film {
 		this.filmCategoriesByFilmId = filmCategoriesByFilmId;
 	}
 
-	@OneToMany(mappedBy = "filmByFilmId")
 	public Collection<Inventory> getInventoriesByFilmId() {
 		return inventoriesByFilmId;
 	}

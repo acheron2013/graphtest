@@ -7,14 +7,21 @@ import java.util.Objects;
 
 @Entity
 public class Actor {
-	private Integer actorId;
-	private String firstName;
-	private String lastName;
-	private Timestamp lastUpdate;
-	private Collection<FilmActor> filmActorsByActorId;
-
 	@Id
 	@Column(name = "actor_id", nullable = false)
+	private Integer actorId;
+	@Basic
+	@Column(name = "first_name", nullable = false, length = 45)
+	private String firstName;
+	@Basic
+	@Column(name = "last_name", nullable = false, length = 45)
+	private String lastName;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@OneToMany(mappedBy = "actorByActorId")
+	private Collection<FilmActor> filmActorsByActorId;
+
 	public Integer getActorId() {
 		return actorId;
 	}
@@ -23,8 +30,6 @@ public class Actor {
 		this.actorId = actorId;
 	}
 
-	@Basic
-	@Column(name = "first_name", nullable = false, length = 45)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -33,8 +38,6 @@ public class Actor {
 		this.firstName = firstName;
 	}
 
-	@Basic
-	@Column(name = "last_name", nullable = false, length = 45)
 	public String getLastName() {
 		return lastName;
 	}
@@ -43,8 +46,6 @@ public class Actor {
 		this.lastName = lastName;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -73,7 +74,6 @@ public class Actor {
 		return Objects.hash(actorId, firstName, lastName, lastUpdate);
 	}
 
-	@OneToMany(mappedBy = "actorByActorId")
 	public Collection<FilmActor> getFilmActorsByActorId() {
 		return filmActorsByActorId;
 	}

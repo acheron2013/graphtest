@@ -7,13 +7,18 @@ import java.util.Objects;
 
 @Entity
 public class Country {
-	private Integer countryId;
-	private String country;
-	private Timestamp lastUpdate;
-	private Collection<City> citiesByCountryId;
-
 	@Id
 	@Column(name = "country_id", nullable = false)
+	private Integer countryId;
+	@Basic
+	@Column(name = "country", nullable = false, length = 50)
+	private String country;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@OneToMany(mappedBy = "countryByCountryId")
+	private Collection<City> citiesByCountryId;
+
 	public Integer getCountryId() {
 		return countryId;
 	}
@@ -22,8 +27,6 @@ public class Country {
 		this.countryId = countryId;
 	}
 
-	@Basic
-	@Column(name = "country", nullable = false, length = 50)
 	public String getCountry() {
 		return country;
 	}
@@ -32,8 +35,6 @@ public class Country {
 		this.country = country;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -61,7 +62,6 @@ public class Country {
 		return Objects.hash(countryId, country, lastUpdate);
 	}
 
-	@OneToMany(mappedBy = "countryByCountryId")
 	public Collection<City> getCitiesByCountryId() {
 		return citiesByCountryId;
 	}

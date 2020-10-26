@@ -6,11 +6,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class FilmCategoryPK implements Serializable {
+	@Column(name = "film_id", insertable = false, updatable = false, nullable = false)
+	@Id
 	private Short filmId;
+	@Column(name = "category_id", insertable = false, updatable = false, nullable = false)
+	@Id
 	private Short categoryId;
 
-	@Column(name = "film_id", nullable = false)
-	@Id
 	public Short getFilmId() {
 		return filmId;
 	}
@@ -19,8 +21,6 @@ public class FilmCategoryPK implements Serializable {
 		this.filmId = filmId;
 	}
 
-	@Column(name = "category_id", nullable = false)
-	@Id
 	public Short getCategoryId() {
 		return categoryId;
 	}

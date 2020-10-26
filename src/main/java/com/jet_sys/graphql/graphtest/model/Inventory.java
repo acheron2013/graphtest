@@ -7,15 +7,24 @@ import java.util.Objects;
 
 @Entity
 public class Inventory {
-	private Integer inventoryId;
-	private Short filmId;
-	private Short storeId;
-	private Timestamp lastUpdate;
-	private Film filmByFilmId;
-	private Collection<Rental> rentalsByInventoryId;
-
 	@Id
 	@Column(name = "inventory_id", nullable = false)
+	private Integer inventoryId;
+	@Basic
+	@Column(name = "film_id", insertable = false, updatable = false, nullable = false)
+	private Short filmId;
+	@Basic
+	@Column(name = "store_id", nullable = false)
+	private Short storeId;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@ManyToOne
+	@JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false)
+	private Film filmByFilmId;
+	@OneToMany(mappedBy = "inventoryByInventoryId")
+	private Collection<Rental> rentalsByInventoryId;
+
 	public Integer getInventoryId() {
 		return inventoryId;
 	}
@@ -24,8 +33,6 @@ public class Inventory {
 		this.inventoryId = inventoryId;
 	}
 
-	@Basic
-	@Column(name = "film_id", nullable = false)
 	public Short getFilmId() {
 		return filmId;
 	}
@@ -34,8 +41,6 @@ public class Inventory {
 		this.filmId = filmId;
 	}
 
-	@Basic
-	@Column(name = "store_id", nullable = false)
 	public Short getStoreId() {
 		return storeId;
 	}
@@ -44,8 +49,6 @@ public class Inventory {
 		this.storeId = storeId;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -74,8 +77,6 @@ public class Inventory {
 		return Objects.hash(inventoryId, filmId, storeId, lastUpdate);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false)
 	public Film getFilmByFilmId() {
 		return filmByFilmId;
 	}
@@ -84,7 +85,6 @@ public class Inventory {
 		this.filmByFilmId = filmByFilmId;
 	}
 
-	@OneToMany(mappedBy = "inventoryByInventoryId")
 	public Collection<Rental> getRentalsByInventoryId() {
 		return rentalsByInventoryId;
 	}

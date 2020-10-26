@@ -7,15 +7,24 @@ import java.util.Objects;
 
 @Entity
 public class City {
-	private Integer cityId;
-	private String city;
-	private Short countryId;
-	private Timestamp lastUpdate;
-	private Collection<Address> addressesByCityId;
-	private Country countryByCountryId;
-
 	@Id
 	@Column(name = "city_id", nullable = false)
+	private Integer cityId;
+	@Basic
+	@Column(name = "city", nullable = false, length = 50)
+	private String city;
+	@Basic
+	@Column(name = "country_id", insertable = false, updatable = false, nullable = false)
+	private Short countryId;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@OneToMany(mappedBy = "cityByCityId")
+	private Collection<Address> addressesByCityId;
+	@ManyToOne
+	@JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
+	private Country countryByCountryId;
+
 	public Integer getCityId() {
 		return cityId;
 	}
@@ -24,8 +33,6 @@ public class City {
 		this.cityId = cityId;
 	}
 
-	@Basic
-	@Column(name = "city", nullable = false, length = 50)
 	public String getCity() {
 		return city;
 	}
@@ -34,8 +41,6 @@ public class City {
 		this.city = city;
 	}
 
-	@Basic
-	@Column(name = "country_id", nullable = false)
 	public Short getCountryId() {
 		return countryId;
 	}
@@ -44,8 +49,6 @@ public class City {
 		this.countryId = countryId;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -74,7 +77,6 @@ public class City {
 		return Objects.hash(cityId, city, countryId, lastUpdate);
 	}
 
-	@OneToMany(mappedBy = "cityByCityId")
 	public Collection<Address> getAddressesByCityId() {
 		return addressesByCityId;
 	}
@@ -83,8 +85,6 @@ public class City {
 		this.addressesByCityId = addressesByCityId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "country_id", referencedColumnName = "country_id", nullable = false)
 	public Country getCountryByCountryId() {
 		return countryByCountryId;
 	}

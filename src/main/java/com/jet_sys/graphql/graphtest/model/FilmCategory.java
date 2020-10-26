@@ -8,14 +8,22 @@ import java.util.Objects;
 @Table(name = "film_category", schema = "public", catalog = "dvdrental")
 @IdClass(FilmCategoryPK.class)
 public class FilmCategory {
+	@Id
+	@Column(name = "film_id", insertable = false, updatable = false, nullable = false)
 	private Short filmId;
+	@Id
+	@Column(name = "category_id", insertable = false, updatable = false, nullable = false)
 	private Short categoryId;
+	@Basic
+	@Column(name = "last_update", nullable = false)
 	private Timestamp lastUpdate;
+	@ManyToOne
+	@JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false)
 	private Film filmByFilmId;
+	@ManyToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
 	private Category categoryByCategoryId;
 
-	@Id
-	@Column(name = "film_id", nullable = false)
 	public Short getFilmId() {
 		return filmId;
 	}
@@ -24,8 +32,6 @@ public class FilmCategory {
 		this.filmId = filmId;
 	}
 
-	@Id
-	@Column(name = "category_id", nullable = false)
 	public Short getCategoryId() {
 		return categoryId;
 	}
@@ -34,8 +40,6 @@ public class FilmCategory {
 		this.categoryId = categoryId;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -63,8 +67,6 @@ public class FilmCategory {
 		return Objects.hash(filmId, categoryId, lastUpdate);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "film_id", referencedColumnName = "film_id", nullable = false)
 	public Film getFilmByFilmId() {
 		return filmByFilmId;
 	}
@@ -73,8 +75,6 @@ public class FilmCategory {
 		this.filmByFilmId = filmByFilmId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
 	public Category getCategoryByCategoryId() {
 		return categoryByCategoryId;
 	}

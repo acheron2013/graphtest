@@ -8,22 +8,44 @@ import java.util.Objects;
 
 @Entity
 public class Customer {
-	private Integer customerId;
-	private Short storeId;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private Short addressId;
-	private Boolean activebool;
-	private Date createDate;
-	private Timestamp lastUpdate;
-	private Integer active;
-	private Address addressByAddressId;
-	private Collection<Payment> paymentsByCustomerId;
-	private Collection<Rental> rentalsByCustomerId;
-
 	@Id
 	@Column(name = "customer_id", nullable = false)
+	private Integer customerId;
+	@Basic
+	@Column(name = "store_id", nullable = false)
+	private Short storeId;
+	@Basic
+	@Column(name = "first_name", nullable = false, length = 45)
+	private String firstName;
+	@Basic
+	@Column(name = "last_name", nullable = false, length = 45)
+	private String lastName;
+	@Basic
+	@Column(name = "email", nullable = true, length = 50)
+	private String email;
+	@Basic
+	@Column(name = "address_id", insertable = false, updatable = false,  nullable = false)
+	private Short addressId;
+	@Basic
+	@Column(name = "activebool", nullable = false)
+	private Boolean activebool;
+	@Basic
+	@Column(name = "create_date", nullable = false)
+	private Date createDate;
+	@Basic
+	@Column(name = "last_update", nullable = true)
+	private Timestamp lastUpdate;
+	@Basic
+	@Column(name = "active", nullable = true)
+	private Integer active;
+	@ManyToOne
+	@JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
+	private Address addressByAddressId;
+	@OneToMany(mappedBy = "customerByCustomerId")
+	private Collection<Payment> paymentsByCustomerId;
+	@OneToMany(mappedBy = "customerByCustomerId")
+	private Collection<Rental> rentalsByCustomerId;
+
 	public Integer getCustomerId() {
 		return customerId;
 	}
@@ -32,8 +54,6 @@ public class Customer {
 		this.customerId = customerId;
 	}
 
-	@Basic
-	@Column(name = "store_id", nullable = false)
 	public Short getStoreId() {
 		return storeId;
 	}
@@ -42,8 +62,6 @@ public class Customer {
 		this.storeId = storeId;
 	}
 
-	@Basic
-	@Column(name = "first_name", nullable = false, length = 45)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -52,8 +70,6 @@ public class Customer {
 		this.firstName = firstName;
 	}
 
-	@Basic
-	@Column(name = "last_name", nullable = false, length = 45)
 	public String getLastName() {
 		return lastName;
 	}
@@ -62,8 +78,6 @@ public class Customer {
 		this.lastName = lastName;
 	}
 
-	@Basic
-	@Column(name = "email", nullable = true, length = 50)
 	public String getEmail() {
 		return email;
 	}
@@ -72,8 +86,6 @@ public class Customer {
 		this.email = email;
 	}
 
-	@Basic
-	@Column(name = "address_id", nullable = false)
 	public Short getAddressId() {
 		return addressId;
 	}
@@ -82,8 +94,6 @@ public class Customer {
 		this.addressId = addressId;
 	}
 
-	@Basic
-	@Column(name = "activebool", nullable = false)
 	public Boolean getActivebool() {
 		return activebool;
 	}
@@ -92,8 +102,6 @@ public class Customer {
 		this.activebool = activebool;
 	}
 
-	@Basic
-	@Column(name = "create_date", nullable = false)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -102,8 +110,6 @@ public class Customer {
 		this.createDate = createDate;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = true)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -112,8 +118,6 @@ public class Customer {
 		this.lastUpdate = lastUpdate;
 	}
 
-	@Basic
-	@Column(name = "active", nullable = true)
 	public Integer getActive() {
 		return active;
 	}
@@ -148,8 +152,6 @@ public class Customer {
 		return Objects.hash(customerId, storeId, firstName, lastName, email, addressId, activebool, createDate, lastUpdate, active);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
 	public Address getAddressByAddressId() {
 		return addressByAddressId;
 	}
@@ -158,7 +160,6 @@ public class Customer {
 		this.addressByAddressId = addressByAddressId;
 	}
 
-	@OneToMany(mappedBy = "customerByCustomerId")
 	public Collection<Payment> getPaymentsByCustomerId() {
 		return paymentsByCustomerId;
 	}
@@ -167,7 +168,6 @@ public class Customer {
 		this.paymentsByCustomerId = paymentsByCustomerId;
 	}
 
-	@OneToMany(mappedBy = "customerByCustomerId")
 	public Collection<Rental> getRentalsByCustomerId() {
 		return rentalsByCustomerId;
 	}

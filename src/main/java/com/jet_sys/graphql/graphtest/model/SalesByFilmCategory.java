@@ -1,17 +1,22 @@
 package com.jet_sys.graphql.graphtest.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigInteger;
 import java.util.Objects;
 
-@Entity
-@Table(name = "sales_by_film_category", schema = "public", catalog = "dvdrental")
+//@Entity
+//@Table(name = "sales_by_film_category", schema = "public", catalog = "dvdrental")
 public class SalesByFilmCategory {
+	@Basic
+	@Column(name = "category", nullable = true, length = 25)
 	private String category;
+	@Basic
+	@Column(name = "total_sales", nullable = true, precision = 0)
 	private BigInteger totalSales;
 
-	@Id
-	@Column(name = "category", nullable = false, length = 25)
 	public String getCategory() {
 		return category;
 	}
@@ -20,8 +25,6 @@ public class SalesByFilmCategory {
 		this.category = category;
 	}
 
-	@Basic
-	@Column(name = "total_sales", nullable = true, precision = 0)
 	public BigInteger getTotalSales() {
 		return totalSales;
 	}

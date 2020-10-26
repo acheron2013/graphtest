@@ -1,22 +1,39 @@
 package com.jet_sys.graphql.graphtest.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
-@Entity
-@Table(name = "staff_list", schema = "public", catalog = "dvdrental")
+//@Entity
+//@Table(name = "staff_list", schema = "public", catalog = "dvdrental")
 public class StaffList {
+	@Basic
+	@Column(name = "id", nullable = true)
 	private Integer id;
+	@Basic
+	@Column(name = "name", nullable = true, length = -1)
 	private String name;
+	@Basic
+	@Column(name = "address", nullable = true, length = 50)
 	private String address;
+	@Basic
+	@Column(name = "zip code", nullable = true, length = 10)
 	private String zipCode;
+	@Basic
+	@Column(name = "phone", nullable = true, length = 20)
 	private String phone;
+	@Basic
+	@Column(name = "city", nullable = true, length = 50)
 	private String city;
+	@Basic
+	@Column(name = "country", nullable = true, length = 50)
 	private String country;
+	@Basic
+	@Column(name = "sid", nullable = true)
 	private Short sid;
 
-	@Id
-	@Column(name = "id", nullable = false)
 	public Integer getId() {
 		return id;
 	}
@@ -25,8 +42,6 @@ public class StaffList {
 		this.id = id;
 	}
 
-	@Basic
-	@Column(name = "name", nullable = true, length = -1)
 	public String getName() {
 		return name;
 	}
@@ -35,8 +50,6 @@ public class StaffList {
 		this.name = name;
 	}
 
-	@Basic
-	@Column(name = "address", nullable = true, length = 50)
 	public String getAddress() {
 		return address;
 	}
@@ -45,8 +58,6 @@ public class StaffList {
 		this.address = address;
 	}
 
-	@Basic
-	@Column(name = "zip code", nullable = true, length = 10)
 	public String getZipCode() {
 		return zipCode;
 	}
@@ -55,8 +66,6 @@ public class StaffList {
 		this.zipCode = zipCode;
 	}
 
-	@Basic
-	@Column(name = "phone", nullable = true, length = 20)
 	public String getPhone() {
 		return phone;
 	}
@@ -65,8 +74,6 @@ public class StaffList {
 		this.phone = phone;
 	}
 
-	@Basic
-	@Column(name = "city", nullable = true, length = 50)
 	public String getCity() {
 		return city;
 	}
@@ -75,8 +82,6 @@ public class StaffList {
 		this.city = city;
 	}
 
-	@Basic
-	@Column(name = "country", nullable = true, length = 50)
 	public String getCountry() {
 		return country;
 	}
@@ -85,8 +90,6 @@ public class StaffList {
 		this.country = country;
 	}
 
-	@Basic
-	@Column(name = "sid", nullable = true)
 	public Short getSid() {
 		return sid;
 	}

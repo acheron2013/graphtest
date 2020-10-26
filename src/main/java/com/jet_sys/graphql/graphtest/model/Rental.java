@@ -7,20 +7,39 @@ import java.util.Objects;
 
 @Entity
 public class Rental {
-	private Integer rentalId;
-	private Timestamp rentalDate;
-	private Integer inventoryId;
-	private Short customerId;
-	private Timestamp returnDate;
-	private Short staffId;
-	private Timestamp lastUpdate;
-	private Collection<Payment> paymentsByRentalId;
-	private Inventory inventoryByInventoryId;
-	private Customer customerByCustomerId;
-	private Staff staffByStaffId;
-
 	@Id
 	@Column(name = "rental_id", nullable = false)
+	private Integer rentalId;
+	@Basic
+	@Column(name = "rental_date", nullable = false)
+	private Timestamp rentalDate;
+	@Basic
+	@Column(name = "inventory_id", insertable = false, updatable = false, nullable = false)
+	private Integer inventoryId;
+	@Basic
+	@Column(name = "customer_id", insertable = false, updatable = false,  nullable = false)
+	private Short customerId;
+	@Basic
+	@Column(name = "return_date", nullable = true)
+	private Timestamp returnDate;
+	@Basic
+	@Column(name = "staff_id", insertable = false, updatable = false,  nullable = false)
+	private Short staffId;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@OneToMany(mappedBy = "rentalByRentalId")
+	private Collection<Payment> paymentsByRentalId;
+	@ManyToOne
+	@JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id", nullable = false)
+	private Inventory inventoryByInventoryId;
+	@ManyToOne
+	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
+	private Customer customerByCustomerId;
+	@ManyToOne
+	@JoinColumn(name = "staff_id", referencedColumnName = "staff_id", nullable = false)
+	private Staff staffByStaffId;
+
 	public Integer getRentalId() {
 		return rentalId;
 	}
@@ -29,8 +48,6 @@ public class Rental {
 		this.rentalId = rentalId;
 	}
 
-	@Basic
-	@Column(name = "rental_date", nullable = false)
 	public Timestamp getRentalDate() {
 		return rentalDate;
 	}
@@ -39,8 +56,6 @@ public class Rental {
 		this.rentalDate = rentalDate;
 	}
 
-	@Basic
-	@Column(name = "inventory_id", nullable = false)
 	public Integer getInventoryId() {
 		return inventoryId;
 	}
@@ -49,8 +64,6 @@ public class Rental {
 		this.inventoryId = inventoryId;
 	}
 
-	@Basic
-	@Column(name = "customer_id", nullable = false)
 	public Short getCustomerId() {
 		return customerId;
 	}
@@ -59,8 +72,6 @@ public class Rental {
 		this.customerId = customerId;
 	}
 
-	@Basic
-	@Column(name = "return_date", nullable = true)
 	public Timestamp getReturnDate() {
 		return returnDate;
 	}
@@ -69,8 +80,6 @@ public class Rental {
 		this.returnDate = returnDate;
 	}
 
-	@Basic
-	@Column(name = "staff_id", nullable = false)
 	public Short getStaffId() {
 		return staffId;
 	}
@@ -79,8 +88,6 @@ public class Rental {
 		this.staffId = staffId;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -112,7 +119,6 @@ public class Rental {
 		return Objects.hash(rentalId, rentalDate, inventoryId, customerId, returnDate, staffId, lastUpdate);
 	}
 
-	@OneToMany(mappedBy = "rentalByRentalId")
 	public Collection<Payment> getPaymentsByRentalId() {
 		return paymentsByRentalId;
 	}
@@ -121,8 +127,6 @@ public class Rental {
 		this.paymentsByRentalId = paymentsByRentalId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "inventory_id", referencedColumnName = "inventory_id", nullable = false)
 	public Inventory getInventoryByInventoryId() {
 		return inventoryByInventoryId;
 	}
@@ -131,8 +135,6 @@ public class Rental {
 		this.inventoryByInventoryId = inventoryByInventoryId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
 	public Customer getCustomerByCustomerId() {
 		return customerByCustomerId;
 	}
@@ -141,8 +143,6 @@ public class Rental {
 		this.customerByCustomerId = customerByCustomerId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "staff_id", referencedColumnName = "staff_id", nullable = false)
 	public Staff getStaffByStaffId() {
 		return staffByStaffId;
 	}

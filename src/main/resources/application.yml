@@ -1,0 +1,83 @@
+
+
+info:
+  env:
+    java:
+      vendor: ${java.specification.vendor}
+      vm-name:  ${java.vm.name}
+      runtime-version: ${java.runtime.version}
+
+server:
+  port: 9443
+  servlet:
+    context-path: /
+
+management:
+  endpoints:
+    beans:
+      enabled       : true
+    env           :
+      enabled: true
+    heapdump      :
+      enabled: true
+    metrics       :
+      enabled: true
+    restart       :
+      enabled: true
+    scheduledtasks:
+      enabled: true
+    security      :
+      enabled: false
+    shutdown      :
+      enabled: true
+    threaddump    :
+      enabled: true
+    web           :
+      exposure:
+        include: "*"
+  health        :
+    defaults:
+      enabled: true
+  metrics       :
+    root:
+      enable: true
+
+
+spring:
+  datasource:
+    driverClassName:  org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari           :
+      jdbc-url: jdbc:postgresql://localhost:5432/dvdrental
+      username: rental
+      password: rental
+      idle-timeout       : 10000
+     ## connection-init-sql: select 1 from dual
+      max-lifetime       : 18000000
+      maximum-pool-size  : 20
+      minimum-idle       : 10
+      pool-name          : Datasource1
+  jpa:
+    show-sql        : false
+    database-platform:  org.hibernate.dialect.PostgreSQLDialect
+
+
+---
+spring:
+  profiles: h2
+  datasource:
+    driverClassName:  org.h2.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari           :
+      jdbc-url: jdbc:h2:mem:testdb
+      username: sa
+      password:
+      idle-timeout       : 10000
+      connection-init-sql: select 1 from dual
+      max-lifetime       : 18000000
+      maximum-pool-size  : 20
+      minimum-idle       : 10
+      pool-name          : Datasource1
+  jpa:
+    show-sql         : false
+    database-platform:  org.hibernate.dialect.PostgreSQLDialect

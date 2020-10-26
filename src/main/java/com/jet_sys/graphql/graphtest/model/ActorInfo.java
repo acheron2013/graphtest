@@ -1,23 +1,24 @@
 package com.jet_sys.graphql.graphtest.model;
 
-
-
-
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "actor_info", schema = "public", catalog = "dvdrental")
 public class ActorInfo {
-	private Integer actorId;
-	private String firstName;
-	private String lastName;
-	private String filmInfo;
-	private String id;
-
 	@Id
-	@Column(name = "actor_id", nullable = false)
+	@Column(name = "actor_id", nullable = true)
+	private Integer actorId;
+	@Basic
+	@Column(name = "first_name", nullable = true, length = 45)
+	private String firstName;
+	@Basic
+	@Column(name = "last_name", nullable = true, length = 45)
+	private String lastName;
+	@Basic
+	@Column(name = "film_info", nullable = true, length = -1)
+	private String filmInfo;
+
 	public Integer getActorId() {
 		return actorId;
 	}
@@ -26,8 +27,6 @@ public class ActorInfo {
 		this.actorId = actorId;
 	}
 
-	@Basic
-	@Column(name = "first_name", nullable = true, length = 45)
 	public String getFirstName() {
 		return firstName;
 	}
@@ -36,8 +35,6 @@ public class ActorInfo {
 		this.firstName = firstName;
 	}
 
-	@Basic
-	@Column(name = "last_name", nullable = true, length = 45)
 	public String getLastName() {
 		return lastName;
 	}
@@ -46,8 +43,6 @@ public class ActorInfo {
 		this.lastName = lastName;
 	}
 
-	@Basic
-	@Column(name = "film_info", nullable = true, length = -1)
 	public String getFilmInfo() {
 		return filmInfo;
 	}
@@ -75,10 +70,4 @@ public class ActorInfo {
 	public int hashCode() {
 		return Objects.hash(actorId, firstName, lastName, filmInfo);
 	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-
 }

@@ -1,23 +1,40 @@
 package com.jet_sys.graphql.graphtest.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-@Entity
-@Table(name = "film_list", schema = "public", catalog = "dvdrental")
+//@Entity
+//@Table(name = "film_list", schema = "public", catalog = "dvdrental")
 public class FilmList {
+	@Basic
+	@Column(name = "fid", nullable = true)
 	private Integer fid;
+	@Basic
+	@Column(name = "title", nullable = true, length = 255)
 	private String title;
+	@Basic
+	@Column(name = "description", nullable = true, length = -1)
 	private String description;
+	@Basic
+	@Column(name = "category", nullable = true, length = 25)
 	private String category;
+	@Basic
+	@Column(name = "price", nullable = true, precision = 2)
 	private BigDecimal price;
+	@Basic
+	@Column(name = "length", nullable = true)
 	private Short length;
+	@Basic
+	@Column(name = "rating", nullable = true)
 	private Object rating;
+	@Basic
+	@Column(name = "actors", nullable = true, length = -1)
 	private String actors;
 
-	@Id
-	@Column(name = "fid", nullable = false)
 	public Integer getFid() {
 		return fid;
 	}
@@ -26,8 +43,6 @@ public class FilmList {
 		this.fid = fid;
 	}
 
-	@Basic
-	@Column(name = "title", nullable = true, length = 255)
 	public String getTitle() {
 		return title;
 	}
@@ -36,8 +51,6 @@ public class FilmList {
 		this.title = title;
 	}
 
-	@Basic
-	@Column(name = "description", nullable = true, length = -1)
 	public String getDescription() {
 		return description;
 	}
@@ -46,8 +59,6 @@ public class FilmList {
 		this.description = description;
 	}
 
-	@Basic
-	@Column(name = "category", nullable = true, length = 25)
 	public String getCategory() {
 		return category;
 	}
@@ -56,8 +67,6 @@ public class FilmList {
 		this.category = category;
 	}
 
-	@Basic
-	@Column(name = "price", nullable = true, precision = 2)
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -66,8 +75,6 @@ public class FilmList {
 		this.price = price;
 	}
 
-	@Basic
-	@Column(name = "length", nullable = true)
 	public Short getLength() {
 		return length;
 	}
@@ -76,8 +83,6 @@ public class FilmList {
 		this.length = length;
 	}
 
-	@Basic
-	@Column(name = "rating", nullable = true)
 	public Object getRating() {
 		return rating;
 	}
@@ -86,8 +91,6 @@ public class FilmList {
 		this.rating = rating;
 	}
 
-	@Basic
-	@Column(name = "actors", nullable = true, length = -1)
 	public String getActors() {
 		return actors;
 	}

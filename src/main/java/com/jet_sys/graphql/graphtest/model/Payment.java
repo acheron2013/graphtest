@@ -7,18 +7,34 @@ import java.util.Objects;
 
 @Entity
 public class Payment {
-	private Integer paymentId;
-	private Short customerId;
-	private Short staffId;
-	private Integer rentalId;
-	private BigDecimal amount;
-	private Timestamp paymentDate;
-	private Customer customerByCustomerId;
-	private Staff staffByStaffId;
-	private Rental rentalByRentalId;
-
 	@Id
 	@Column(name = "payment_id", nullable = false)
+	private Integer paymentId;
+	@Basic
+	@Column(name = "customer_id", insertable = false, updatable = false,  nullable = false)
+	private Short customerId;
+	@Basic
+	@Column(name = "staff_id", insertable = false, updatable = false, nullable = false)
+	private Short staffId;
+	@Basic
+	@Column(name = "rental_id", insertable = false, updatable = false,  nullable = false)
+	private Integer rentalId;
+	@Basic
+	@Column(name = "amount", nullable = false, precision = 2)
+	private BigDecimal amount;
+	@Basic
+	@Column(name = "payment_date", nullable = false)
+	private Timestamp paymentDate;
+	@ManyToOne
+	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
+	private Customer customerByCustomerId;
+	@ManyToOne
+	@JoinColumn(name = "staff_id", referencedColumnName = "staff_id", nullable = false)
+	private Staff staffByStaffId;
+	@ManyToOne
+	@JoinColumn(name = "rental_id", referencedColumnName = "rental_id", nullable = false)
+	private Rental rentalByRentalId;
+
 	public Integer getPaymentId() {
 		return paymentId;
 	}
@@ -27,8 +43,6 @@ public class Payment {
 		this.paymentId = paymentId;
 	}
 
-	@Basic
-	@Column(name = "customer_id", nullable = false)
 	public Short getCustomerId() {
 		return customerId;
 	}
@@ -37,8 +51,6 @@ public class Payment {
 		this.customerId = customerId;
 	}
 
-	@Basic
-	@Column(name = "staff_id", nullable = false)
 	public Short getStaffId() {
 		return staffId;
 	}
@@ -47,8 +59,6 @@ public class Payment {
 		this.staffId = staffId;
 	}
 
-	@Basic
-	@Column(name = "rental_id", nullable = false)
 	public Integer getRentalId() {
 		return rentalId;
 	}
@@ -57,8 +67,6 @@ public class Payment {
 		this.rentalId = rentalId;
 	}
 
-	@Basic
-	@Column(name = "amount", nullable = false, precision = 2)
 	public BigDecimal getAmount() {
 		return amount;
 	}
@@ -67,8 +75,6 @@ public class Payment {
 		this.amount = amount;
 	}
 
-	@Basic
-	@Column(name = "payment_date", nullable = false)
 	public Timestamp getPaymentDate() {
 		return paymentDate;
 	}
@@ -99,8 +105,6 @@ public class Payment {
 		return Objects.hash(paymentId, customerId, staffId, rentalId, amount, paymentDate);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "customer_id", referencedColumnName = "customer_id", nullable = false)
 	public Customer getCustomerByCustomerId() {
 		return customerByCustomerId;
 	}
@@ -109,8 +113,6 @@ public class Payment {
 		this.customerByCustomerId = customerByCustomerId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "staff_id", referencedColumnName = "staff_id", nullable = false)
 	public Staff getStaffByStaffId() {
 		return staffByStaffId;
 	}
@@ -119,8 +121,6 @@ public class Payment {
 		this.staffByStaffId = staffByStaffId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "rental_id", referencedColumnName = "rental_id", nullable = false)
 	public Rental getRentalByRentalId() {
 		return rentalByRentalId;
 	}

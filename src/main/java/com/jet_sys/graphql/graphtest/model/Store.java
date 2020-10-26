@@ -6,15 +6,25 @@ import java.util.Objects;
 
 @Entity
 public class Store {
-	private Integer storeId;
-	private Short managerStaffId;
-	private Short addressId;
-	private Timestamp lastUpdate;
-	private Staff staffByManagerStaffId;
-	private Address addressByAddressId;
-
 	@Id
 	@Column(name = "store_id", nullable = false)
+	private Integer storeId;
+	@Basic
+	@Column(name = "manager_staff_id", insertable = false, updatable = false, nullable = false)
+	private Short managerStaffId;
+	@Basic
+	@Column(name = "address_id", insertable = false, updatable = false, nullable = false)
+	private Short addressId;
+	@Basic
+	@Column(name = "last_update", nullable = false)
+	private Timestamp lastUpdate;
+	@ManyToOne
+	@JoinColumn(name = "manager_staff_id", referencedColumnName = "staff_id", nullable = false)
+	private Staff staffByManagerStaffId;
+	@ManyToOne
+	@JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
+	private Address addressByAddressId;
+
 	public Integer getStoreId() {
 		return storeId;
 	}
@@ -23,8 +33,6 @@ public class Store {
 		this.storeId = storeId;
 	}
 
-	@Basic
-	@Column(name = "manager_staff_id", nullable = false)
 	public Short getManagerStaffId() {
 		return managerStaffId;
 	}
@@ -33,8 +41,6 @@ public class Store {
 		this.managerStaffId = managerStaffId;
 	}
 
-	@Basic
-	@Column(name = "address_id", nullable = false)
 	public Short getAddressId() {
 		return addressId;
 	}
@@ -43,8 +49,6 @@ public class Store {
 		this.addressId = addressId;
 	}
 
-	@Basic
-	@Column(name = "last_update", nullable = false)
 	public Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
@@ -73,8 +77,6 @@ public class Store {
 		return Objects.hash(storeId, managerStaffId, addressId, lastUpdate);
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "manager_staff_id", referencedColumnName = "staff_id", nullable = false)
 	public Staff getStaffByManagerStaffId() {
 		return staffByManagerStaffId;
 	}
@@ -83,8 +85,6 @@ public class Store {
 		this.staffByManagerStaffId = staffByManagerStaffId;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "address_id", referencedColumnName = "address_id", nullable = false)
 	public Address getAddressByAddressId() {
 		return addressByAddressId;
 	}
